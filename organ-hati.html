@@ -717,10 +717,10 @@ async function loadSaved(k) {
     if (d.fase_2) {
       const f2 = d.fase_2;
       sv('f2_rumusan_pilih', f2.rumusan_pilih);
-      sv('f2_keterkaitan_gejala', f2.keterkaitan_gejala); sv('f2_kebiasaan_hati', f2.kebiasaan_hati);
-      sv('f2_progresi_hati', f2.progresi_hati);
-      try { const a = JSON.parse(f2.struktur_huruf||'[]'); a.forEach(r=> sv('f2_hati'+r.huruf, r.nama)); } catch {}
-      try { const a = JSON.parse(f2.struktur_fungsi||'[]'); a.forEach((r,i)=>{ sv('f2_str'+(i+1)+'_nama', r.nama); sv('f2_str'+(i+1)+'_fungsi', r.fungsi); }); } catch {}
+      sv('f2_dampak_gangguan', f2.dampak_gangguan);
+      sv('f2_gagal_hati', f2.gagal_hati);
+      sv('f2_kesimpulan', f2.kesimpulan);
+      try { const a = JSON.parse(f2.struktur_fungsi||'[]'); a.forEach((r,i)=>{ sv('f2_hat'+(i+1)+'_nama', r.nama); sv('f2_hat'+(i+1)+'_fungsi', r.fungsi); }); } catch {}
       faseSubmitted[2] = true;
     }
     if (d.fase_3) {
@@ -759,11 +759,10 @@ async function submitFase(fase) {
     if (!data.fakta) { showSt(statusEl,'err','⚠️ Isi fakta terlebih dahulu.'); return; }
   } else if (fase===2) {
     data.rumusan_pilih = gv('f2_rumusan_pilih');
-    data.struktur_huruf = JSON.stringify(['A','B','C','D','E','F','G','H','I','J'].map(l=>({huruf:l,nama:gv('f2_hati'+l)})));
-    data.struktur_fungsi = JSON.stringify([1,2,3,4,5,6,7,8,9,10].map(i=>({nama:gv('f2_str'+i+'_nama'),fungsi:gv('f2_str'+i+'_fungsi')})));
-    data.keterkaitan_gejala = gv('f2_keterkaitan_gejala');
-    data.kebiasaan_hati = gv('f2_kebiasaan_hati');
-    data.progresi_hati = gv('f2_progresi_hati');
+    data.struktur_fungsi = JSON.stringify([1,2,3,4,5,6,7,8,9,10].map(i=>({nama:gv('f2_hat'+i+'_nama'),fungsi:gv('f2_hat'+i+'_fungsi')})));
+    data.dampak_gangguan = gv('f2_dampak_gangguan');
+    data.gagal_hati = gv('f2_gagal_hati');
+    data.kesimpulan = gv('f2_kesimpulan');
     if (!data.rumusan_pilih) { showSt(statusEl,'err','⚠️ Isi rumusan masalah.'); return; }
   } else if (fase===3) {
     data.sumber_referensi = JSON.stringify([1,2,3,4].map(i=>({nama:gv('f3_src'+i+'_nama'),url:gv('f3_src'+i+'_url'),info:gv('f3_src'+i+'_info')})));
