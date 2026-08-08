@@ -1,3 +1,4 @@
+<!-- VERSI DIPERBAIKI: fase 2 field sinkron + validasi tidak lagi blok simpan -->
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -756,28 +757,28 @@ async function submitFase(fase) {
 
   if (fase===1) {
     data.fakta = gv('f1_fakta'); data.rumusan_masalah = gv('f1_rumusan');
-    if (!data.fakta) { showSt(statusEl,'err','⚠️ Isi fakta terlebih dahulu.'); return; }
+    if (!data.fakta) { showSt(statusEl,'err','⚠️ Fakta kosong, tapi data lain tetap disimpan.'); }
   } else if (fase===2) {
     data.rumusan_pilih = gv('f2_rumusan_pilih');
     data.struktur_fungsi = JSON.stringify([1,2,3,4,5,6,7,8,9,10].map(i=>({nama:gv('f2_hat'+i+'_nama'),fungsi:gv('f2_hat'+i+'_fungsi')})));
     data.dampak_gangguan = gv('f2_dampak_gangguan');
     data.gagal_hati = gv('f2_gagal_hati');
     data.kesimpulan = gv('f2_kesimpulan');
-    if (!data.rumusan_pilih) { showSt(statusEl,'err','⚠️ Isi rumusan masalah.'); return; }
+    if (!data.rumusan_pilih) { showSt(statusEl,'err','⚠️ Rumusan masalah kosong, tapi data lain tetap disimpan.'); }
   } else if (fase===3) {
     data.sumber_referensi = JSON.stringify([1,2,3,4].map(i=>({nama:gv('f3_src'+i+'_nama'),url:gv('f3_src'+i+'_url'),info:gv('f3_src'+i+'_info')})));
     data.jawab_rumusan = gv('f3_jawab_rumusan');
     data.keterkaitan   = gv('f3_keterkaitan');
     data.solusi        = gv('f3_solusi');
-    if (!data.jawab_rumusan && !data.solusi) { showSt(statusEl,'err','⚠️ Isi jawaban rumusan masalah.'); return; }
+    if (!data.jawab_rumusan && !data.solusi) { showSt(statusEl,'err','⚠️ Jawaban/solusi kosong, tapi data lain tetap disimpan.'); }
   } else if (fase===4) {
     data.tanya_jawab = JSON.stringify([1,2,3,4,5,6].map(i=>({kelompok:gv('f4_tj'+i+'_kel'),pertanyaan:gv('f4_tj'+i+'_q'),jawaban:gv('f4_tj'+i+'_a')})));
     data.tanggapan   = JSON.stringify([1,2,3,4,5,6].map(i=>({kelompok:gv('f4_tg'+i+'_kel'),isi:gv('f4_tg'+i+'_isi')})));
-    if (!gv('f4_tj1_q') && !gv('f4_tj1_kel')) { showSt(statusEl,'err','⚠️ Isi minimal 1 baris tanya jawab.'); return; }
+    if (!gv('f4_tj1_q') && !gv('f4_tj1_kel')) { showSt(statusEl,'err','⚠️ Tanya jawab kosong, tapi data lain tetap disimpan.'); }
   } else if (fase===5) {
     data.refleksi1 = gv('f5_refleksi1'); data.refleksi2 = gv('f5_refleksi2'); data.refleksi3 = gv('f5_refleksi3');
     data.kelebihan = gv('f5_kelebihan'); data.kekurangan = gv('f5_kekurangan');
-    if (!data.refleksi1) { showSt(statusEl,'err','⚠️ Isi refleksi terlebih dahulu.'); return; }
+    if (!data.refleksi1) { showSt(statusEl,'err','⚠️ Refleksi kosong, tapi data lain tetap disimpan.'); }
   }
 
   showSt(statusEl,'loading','⏳ Menyimpan ke Firebase...');
